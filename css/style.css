@@ -1,0 +1,106 @@
+/* Installation
+============================================================================= */
+.installation-breadcrumb {
+	padding-left: 0;
+	margin-bottom: 20px;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	padding: 10px;
+	background: #f4f4f4;
+}
+
+.installation-breadcrumb li {
+	list-style: none;
+	display: inline-block;
+}
+
+.installation-breadcrumb li:before {
+	content: "\203A ";
+	padding-right: 10px;
+	padding-left: 5px;
+}
+
+.installation-breadcrumb li:first-child:before {
+	content: "";
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.installation-breadcrumb .disabled {
+	color: #bebebe;
+}
+
+
+
+
+/* 
+============================================================================= */
+.pagination .disabled * {
+	cursor: default !important;
+}
+
+.pagination .disabled a,
+.pagination .disabled a:hover {
+	background: #f8f8f8;
+}
+
+.breadcrumb {
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+.page-header {
+	margin-top: 0;
+}
+
+/* Posts
+============================================================================= */
+.post-header {
+	margin-bottom: 15px;
+}
+
+.post-header small {
+	font-size: 80%;
+}
+
+.post-content {
+	margin-bottom: 15px;
+}
+
+.post-content h4:first-child {
+	margin-top: 0;
+}
+
+/* WYSIWYG Bootstrap Editor
+============================================================================= */
+.post-reply-container {
+	margin: 0 0 20px 0;
+}
+
+.post-reply-container h3 {
+	margin-top: 0;
+}
+
+#wysiwygButtons {
+	background: #f6f6f6;
+	padding: 10px;
+	border: 1px solid rgb(204, 204, 204);
+	-webkit-border-top-left-radius: 4px;
+	    -moz-border-radius-topleft: 4px;
+	        border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	    -moz-border-radius-topright: 4px;
+	        border-top-right-radius: 4px;
+}
+
+#wysiwygEditor {
+	overflow-y: scroll;
+	height: 300px;
+	border-top: 0;
+	-webkit-border-top-left-radius: 0;
+	    -moz-border-radius-topleft: 0;
+	        border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	    -moz-border-radius-topright: 0;
+	        border-top-right-radius: 0;
+}

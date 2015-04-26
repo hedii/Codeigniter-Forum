@@ -22,11 +22,11 @@
 			<?= form_open() ?>
 				<div class="form-group">
 					<label for="title">Topic title</label>
-					<input type="text" class="form-control" id="title" name="title" placeholder="Enter a topic title">
+					<input type="text" class="form-control" id="title" name="title" placeholder="Enter a topic title" value="<?= $title ?>">
 				</div>
 				<div class="form-group">
 					<label for="content">Content</label>
-					<textarea rows="6" class="form-control" id="content" name="content" placeholder="Enter your topic content here"></textarea>
+					<textarea rows="6" class="form-control" id="content" name="content" placeholder="Enter your topic content here"><?= $content ?></textarea>
 				</div>
 				<div class="form-group">
 					<input type="submit" class="btn btn-default" value="Create topic">

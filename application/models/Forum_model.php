@@ -43,6 +43,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_forum_id_from_forum_slug function.
+	 * 
+	 * @access public
+	 * @param string $slug
+	 * @return int
+	 */
 	public function get_forum_id_from_forum_slug($slug) {
 		
 		$this->db->select('id');
@@ -52,11 +59,18 @@ class Forum_model extends CI_Model {
 		
 	}
 	
-	public function get_topic_id_from_topic_slug($slug) {
+	/**
+	 * get_topic_id_from_topic_slug function.
+	 * 
+	 * @access public
+	 * @param string $topic_slug
+	 * @return int
+	 */
+	public function get_topic_id_from_topic_slug($topic_slug) {
 		
 		$this->db->select('id');
 		$this->db->from('topics');
-		$this->db->where('slug', $slug);
+		$this->db->where('slug', $topic_slug);
 		return $this->db->get()->row('id');
 		
 	}
@@ -73,6 +87,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_forum function.
+	 * 
+	 * @access public
+	 * @param int $forum_id
+	 * @return object
+	 */
 	public function get_forum($forum_id) {
 		
 		$this->db->from('forums');
@@ -81,6 +102,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_topic function.
+	 * 
+	 * @access public
+	 * @param int $topic_id
+	 * @return object
+	 */
 	public function get_topic($topic_id) {
 		
 		$this->db->from('topics');
@@ -89,6 +117,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_forum_topics function.
+	 * 
+	 * @access public
+	 * @param int $forum_id
+	 * @return array of objects
+	 */
 	public function get_forum_topics($forum_id) {
 		
 		$this->db->from('topics');
@@ -97,6 +132,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_posts function.
+	 * 
+	 * @access public
+	 * @param int $topic_id
+	 * @return array of objects
+	 */
 	public function get_posts($topic_id) {
 		
 		$this->db->from('posts');
@@ -105,6 +147,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_topic_latest_post function.
+	 * 
+	 * @access public
+	 * @param int $topic_id
+	 * @return object
+	 */
 	public function get_topic_latest_post($topic_id) {
 		
 		$this->db->from('posts');
@@ -115,6 +164,16 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * create_topic function.
+	 * 
+	 * @access public
+	 * @param int $forum_id
+	 * @param string $title
+	 * @param string $content
+	 * @param int $user_id
+	 * @return bool
+	 */
 	public function create_topic($forum_id, $title, $content, $user_id) {
 		
 		$data = array(
@@ -134,6 +193,15 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * create_post function.
+	 * 
+	 * @access public
+	 * @param int $topic_id
+	 * @param int $user_id
+	 * @param string $content
+	 * @return bool
+	 */
 	public function create_post($topic_id, $user_id, $content) {
 		
 		$data = array(
@@ -154,6 +222,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * count_forum_posts function.
+	 * 
+	 * @access public
+	 * @param int $forum_id
+	 * @return int
+	 */
 	public function count_forum_posts($forum_id) {
 		
 		$this->db->select('posts.id');
@@ -165,6 +240,13 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_forum_latest_topic function.
+	 * 
+	 * @access public
+	 * @param int $forum_id
+	 * @return object
+	 */
 	public function get_forum_latest_topic($forum_id) {
 		
 		$this->db->from('topics');

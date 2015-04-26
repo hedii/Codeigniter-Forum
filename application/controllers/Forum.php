@@ -28,7 +28,7 @@ class Forum extends CI_Controller {
 	 * index function.
 	 * 
 	 * @access public
-	 * @param bool $slug (default: false)
+	 * @param mixed $slug (default: false)
 	 * @return void
 	 */
 	public function index($slug = false) {
@@ -160,7 +160,7 @@ class Forum extends CI_Controller {
 	 * create_topic function.
 	 * 
 	 * @access public
-	 * @param mixed $forum_slug
+	 * @param string $forum_slug
 	 * @return void
 	 */
 	public function create_topic($forum_slug) {
@@ -218,8 +218,8 @@ class Forum extends CI_Controller {
 	 * topic function.
 	 * 
 	 * @access public
-	 * @param mixed $forum_slug
-	 * @param mixed $topic_slug
+	 * @param string $forum_slug
+	 * @param string $topic_slug
 	 * @return void
 	 */
 	public function topic($forum_slug, $topic_slug) {
@@ -256,8 +256,8 @@ class Forum extends CI_Controller {
 	 * create_post function.
 	 * 
 	 * @access public
-	 * @param mixed $forum_slug
-	 * @param mixed $topic_slug
+	 * @param string $forum_slug
+	 * @param string $topic_slug
 	 * @return void
 	 */
 	public function create_post($forum_slug, $topic_slug) {

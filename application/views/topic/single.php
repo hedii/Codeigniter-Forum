@@ -12,7 +12,7 @@
 				<article class="panel panel-default">
 					<div class="panel-body">
 						<header class="post-header">
-							<small><?= $post->author ?>, <?= $post->created_at ?></small>
+							<small><a href=""><?= $post->author ?></a>, <?= $post->created_at ?></small>
 						</header>
 						<div class="post-content">
 							<?= $post->content ?>

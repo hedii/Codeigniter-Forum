@@ -24,6 +24,13 @@ class Forum extends CI_Controller {
 		
 	}
 	
+	/**
+	 * index function.
+	 * 
+	 * @access public
+	 * @param bool $slug (default: false)
+	 * @return void
+	 */
 	public function index($slug = false) {
 		
 		// create the data object
@@ -35,10 +42,28 @@ class Forum extends CI_Controller {
 			
 			foreach ($forums as $forum) {
 				
-				$forum->permalink = base_url($forum->slug);
+				$forum->permalink    = base_url($forum->slug);
+				$forum->topics       = $this->forum_model->get_forum_topics($forum->id);
+				$forum->count_topics = count($forum->topics);
+				$forum->count_posts  = $this->forum_model->count_forum_posts($forum->id);
 				
-				/* @todo count posts, topics, etc... */
-				
+				if ($forum->count_topics > 0) {
+					
+					// $forum has topics
+					$forum->latest_topic            = $this->forum_model->get_forum_latest_topic($forum->id);
+					$forum->latest_topic->permalink = $forum->slug . '/' . $forum->latest_topic->slug;
+					$forum->latest_topic->author    = $this->user_model->get_username_from_user_id($forum->latest_topic->user_id);
+					
+				} else {
+					
+					// $forum doesn't have topics yet
+					$forum->latest_topic = new stdClass();
+					$forum->latest_topic->permalink = null;
+					$forum->latest_topic->author = null;
+					$forum->latest_topic->created_at = null;
+					
+				}
+	
 			}
 			
 			$data->forums = $forums;
@@ -51,8 +76,21 @@ class Forum extends CI_Controller {
 			
 			$forum_id = $this->forum_model->get_forum_id_from_forum_slug($slug);
 			$forum    = $this->forum_model->get_forum($forum_id);
+			$topics   = $this->forum_model->get_forum_topics($forum_id);
 			
-			$data->forum = $forum;
+			foreach ($topics as $topic) {
+				
+				$topic->author              = $this->user_model->get_username_from_user_id($topic->user_id);
+				$topic->permalink           = $slug . '/' . $topic->slug;
+				$topic->posts               = $this->forum_model->get_posts($topic->id);
+				$topic->count_posts         = count($topic->posts);
+				$topic->latest_post         = $this->forum_model->get_topic_latest_post($topic->id);
+				$topic->latest_post->author = $this->user_model->get_username_from_user_id($topic->latest_post->user_id);
+				
+			}
+			
+			$data->forum  = $forum;
+			$data->topics = $topics;
 			
 			$this->load->view('header');
 			$this->load->view('forum/single', $data);
@@ -118,6 +156,13 @@ class Forum extends CI_Controller {
 		
 	}
 	
+	/**
+	 * create_topic function.
+	 * 
+	 * @access public
+	 * @param mixed $forum_slug
+	 * @return void
+	 */
 	public function create_topic($forum_slug) {
 		
 		// create the data object
@@ -169,6 +214,14 @@ class Forum extends CI_Controller {
 		
 	}
 	
+	/**
+	 * topic function.
+	 * 
+	 * @access public
+	 * @param mixed $forum_slug
+	 * @param mixed $topic_slug
+	 * @return void
+	 */
 	public function topic($forum_slug, $topic_slug) {
 		
 		// create the data object
@@ -187,7 +240,6 @@ class Forum extends CI_Controller {
 			
 		}
 		
-		
 		$data->forum = $forum;
 		$data->topic = $topic;
 		$data->posts = $posts;
@@ -197,6 +249,76 @@ class Forum extends CI_Controller {
 		$this->load->view('footer');
 		
 		//var_dump($forum, $topic, $posts);
+		
+	}
+	
+	/**
+	 * create_post function.
+	 * 
+	 * @access public
+	 * @param mixed $forum_slug
+	 * @param mixed $topic_slug
+	 * @return void
+	 */
+	public function create_post($forum_slug, $topic_slug) {
+		
+		// create the data object
+		$data = new stdClass();
+		
+		$forum_id = $this->forum_model->get_forum_id_from_forum_slug($forum_slug);
+		$topic_id = $this->forum_model->get_topic_id_from_topic_slug($topic_slug);
+		
+		$forum = $this->forum_model->get_forum($forum_id);
+		$topic = $this->forum_model->get_topic($topic_id);
+		$posts = $this->forum_model->get_posts($topic_id);
+		
+		foreach ($posts as $post) {
+			
+			$post->author = $this->user_model->get_username_from_user_id($post->user_id);
+			
+		}
+		
+		$data->forum = $forum;
+		$data->topic = $topic;
+		$data->posts = $posts;
+		
+		// load form helper and validation library
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		// set validation rules
+		$this->form_validation->set_rules('reply', 'Reply', 'required|min_length[2]');
+		
+		if ($this->form_validation->run() === false) {
+			
+			// validation not ok, send validation errors to the view
+			$this->load->view('header');
+			$this->load->view('topic/reply', $data);
+			$this->load->view('footer');
+			
+		} else {
+			
+			$user_id = $_SESSION['user_id'];
+			$content = $this->input->post('reply');
+			
+			if ($this->forum_model->create_post($topic_id, $user_id, $content)) {
+				
+				// post creation ok
+				redirect(base_url($forum_slug . '/' . $topic_slug));
+				
+			} else {
+				
+				// post creation failed, this should never happen
+				$data->error = 'There was a problem creating your reply. Please try again.';
+				
+				// send error to the view
+				$this->load->view('header');
+				$this->load->view('topic/reply', $data);
+				$this->load->view('footer');
+				
+			}
+			
+		}
 		
 	}
 	

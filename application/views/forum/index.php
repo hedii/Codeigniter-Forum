@@ -30,17 +30,17 @@
 								</td>
 								<td>
 									<p>
-										<small></small>
+										<small><?= $forum->count_topics ?></small>
 									</p>
 								</td>
 								<td>
 									<p>
-										<small></small>
+										<small><?= $forum->count_posts ?></small>
 									</p>
 								</td>
 								<td class="hidden-xs">
 									<p>
-										<small></small></p>
+										<small><a href="<?= $forum->latest_topic->permalink ?>"><?= $forum->latest_topic->author ?></a><br><?= $forum->latest_topic->created_at ?></small></p>
 								</td>
 							</tr>
 						<?php endforeach; ?>
@@ -53,4 +53,4 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
-<?php var_dump($forums); ?>
+<?php //var_dump($forums); ?>

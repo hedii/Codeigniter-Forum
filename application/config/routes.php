@@ -58,6 +58,7 @@ $route['(:any)/create_topic'] = 'forum/create_topic/$1';
 $route['/'] = 'forum/index';
 $route['(:any)'] = 'forum/index/$1';
 $route['(:any)/(:any)'] = 'forum/topic/$1/$2';
+$route['(:any)/(:any)/reply'] = 'forum/create_post/$1/$2';
 
 $route['default_controller'] = 'forum';
 $route['404_override'] = '';

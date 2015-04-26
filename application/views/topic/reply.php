@@ -20,11 +20,31 @@
 			</div>
 		<?php endforeach; ?>
 		
-		<?php if (isset($_SESSION['user_id'])) : ?>
+		<?php if (validation_errors()) : ?>
 			<div class="col-md-12">
-				<a href="<?= base_url($forum->slug . '/' . $topic->slug . '/reply') ?>" class="btn btn-default">Reply to this topic</a>
+				<div class="alert alert-danger" role="alert">
+					<?= validation_errors() ?>
+				</div>
 			</div>
 		<?php endif; ?>
+		<?php if (isset($error)) : ?>
+			<div class="col-md-12">
+				<div class="alert alert-danger" role="alert">
+					<?= $error ?>
+				</div>
+			</div>
+		<?php endif; ?>
+		<div class="col-md-12">
+			<?= form_open() ?>
+				<div class="form-group">
+					<label for="reply">Reply</label>
+					<textarea rows="6" class="form-control" id="reply" name="reply" placeholder=""></textarea>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-default" value="Reply">
+				</div>
+			</form>
+		</div>
 		
 	</div><!-- .row -->
 </div><!-- .container -->

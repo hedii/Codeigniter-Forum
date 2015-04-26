@@ -89,11 +89,29 @@ class Forum_model extends CI_Model {
 		
 	}
 	
+	public function get_forum_topics($forum_id) {
+		
+		$this->db->from('topics');
+		$this->db->where('forum_id', $forum_id);
+		return $this->db->get()->result();
+		
+	}
+	
 	public function get_posts($topic_id) {
 		
 		$this->db->from('posts');
 		$this->db->where('topic_id', $topic_id);
 		return $this->db->get()->result();
+		
+	}
+	
+	public function get_topic_latest_post($topic_id) {
+		
+		$this->db->from('posts');
+		$this->db->where('topic_id', $topic_id);
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(1);
+		return $this->db->get()->row();
 		
 	}
 	
@@ -125,8 +143,36 @@ class Forum_model extends CI_Model {
 			'created_at' => date('Y-m-j H:i:s'),
 		);
 		
-		return $this->db->insert('posts', $data);
+		if ($this->db->insert('posts', $data)) {
+			
+			$data = array('updated_at' => date('Y-m-j H:i:s'));
+			$this->db->where('id', $topic_id);
+			return $this->db->update('topics', $data);
+			
+		}
+		return false;
 		
 	}
+	
+	public function count_forum_posts($forum_id) {
+		
+		$this->db->select('posts.id');
+		$this->db->from('posts');
+		$this->db->join('topics', 'posts.topic_id = topics.id');
+		$this->db->where('topics.forum_id', $forum_id);
+		$this->db->group_by('posts.id');
+		return count($this->db->get()->result());
+		
+	}
+	
+	public function get_forum_latest_topic($forum_id) {
+		
+		$this->db->from('topics');
+		$this->db->where('forum_id', $forum_id);
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(1);
+		return $this->db->get()->row();
+		
+	} 
 	
 }

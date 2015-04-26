@@ -50,6 +50,12 @@
 			
 		</div>
 		
+		<?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) : ?>
+			<div class="col-md-12">
+				<a href="<?= base_url('create_forum') ?>" class="btn btn-default">Create a new forum</a>
+			</div>
+		<?php endif; ?>
+		
 	</div><!-- .row -->
 </div><!-- .container -->
 

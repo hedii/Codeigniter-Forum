@@ -22,7 +22,7 @@ class Forum extends CI_Controller {
 		$this->load->model('forum_model');
 		$this->load->model('user_model');
 		
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 		
 	}
 	
@@ -40,6 +40,7 @@ class Forum extends CI_Controller {
 		
 		if ($slug === false) {
 			
+			// get forums array of objects
 			$forums = $this->forum_model->get_forums();
 			
 			foreach ($forums as $forum) {
@@ -68,15 +69,20 @@ class Forum extends CI_Controller {
 	
 			}
 			
+			// assign forums array of objects to the data object
 			$data->forums = $forums;
 			
+			// load views and send data
 			$this->load->view('header');
 			$this->load->view('forum/index', $data);
 			$this->load->view('footer');
 			
 		} else {
 			
+			// get id from slug
 			$forum_id = $this->forum_model->get_forum_id_from_forum_slug($slug);
+			
+			// create objects
 			$forum    = $this->forum_model->get_forum($forum_id);
 			$topics   = $this->forum_model->get_forum_topics($forum_id);
 			
@@ -91,9 +97,11 @@ class Forum extends CI_Controller {
 				
 			}
 			
+			// assign created objects to the data object
 			$data->forum  = $forum;
 			$data->topics = $topics;
 			
+			// load views and send data
 			$this->load->view('header');
 			$this->load->view('forum/single', $data);
 			$this->load->view('footer');
@@ -191,6 +199,7 @@ class Forum extends CI_Controller {
 			
 		} else {
 			
+			// set variables from the form
 			$title   = $this->input->post('title');
 			$content = $this->input->post('content');
 			$user_id = $_SESSION['user_id'];
@@ -229,9 +238,11 @@ class Forum extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
+		// get ids from slugs
 		$forum_id = $this->forum_model->get_forum_id_from_forum_slug($forum_slug);
 		$topic_id = $this->forum_model->get_topic_id_from_topic_slug($topic_slug);
 		
+		// create objects
 		$forum = $this->forum_model->get_forum($forum_id);
 		$topic = $this->forum_model->get_topic($topic_id);
 		$posts = $this->forum_model->get_posts($topic_id);
@@ -242,10 +253,12 @@ class Forum extends CI_Controller {
 			
 		}
 		
+		// assign created objects to the data object
 		$data->forum = $forum;
 		$data->topic = $topic;
 		$data->posts = $posts;
 		
+		// load views and send data
 		$this->load->view('header');
 		$this->load->view('topic/single', $data);
 		$this->load->view('footer');
@@ -267,9 +280,11 @@ class Forum extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
+		// get ids from slugs
 		$forum_id = $this->forum_model->get_forum_id_from_forum_slug($forum_slug);
 		$topic_id = $this->forum_model->get_topic_id_from_topic_slug($topic_slug);
 		
+		// create objects
 		$forum = $this->forum_model->get_forum($forum_id);
 		$topic = $this->forum_model->get_topic($topic_id);
 		$posts = $this->forum_model->get_posts($topic_id);
@@ -280,6 +295,7 @@ class Forum extends CI_Controller {
 			
 		}
 		
+		// assign created objects to the data object
 		$data->forum = $forum;
 		$data->topic = $topic;
 		$data->posts = $posts;

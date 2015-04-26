@@ -2,6 +2,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<?= $breadcrumb ?>
+		</div>
+		<div class="col-md-12">
 			<div class="page-header">
 				<h1><?= $topic->title ?></h1>
 			</div>
@@ -9,14 +12,16 @@
 		
 		<?php foreach ($posts as $post) : ?>
 			<div class="col-md-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><?= $post->author ?>, <?= $post->created_at ?></h3>
-					</div>
+				<article class="panel panel-default">
 					<div class="panel-body">
-						<?= $post->content ?>
+						<header class="post-header">
+							<small><a href=""><?= $post->author ?></a>, <?= $post->created_at ?></small>
+						</header>
+						<div class="post-content">
+							<?= $post->content ?>
+						</div>
 					</div>
-				</div>
+				</article>
 			</div>
 		<?php endforeach; ?>
 		

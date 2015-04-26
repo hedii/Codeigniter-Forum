@@ -40,7 +40,7 @@ class Forum extends CI_Controller {
 		
 		if ($slug === false) {
 			
-			// get forums array of objects
+			// create objects
 			$forums = $this->forum_model->get_forums();
 			
 			foreach ($forums as $forum) {
@@ -69,8 +69,14 @@ class Forum extends CI_Controller {
 	
 			}
 			
-			// assign forums array of objects to the data object
-			$data->forums = $forums;
+			// create breadcrumb
+			$breadcrumb  = '<ol class="breadcrumb">';
+			$breadcrumb .= '<li class="active">Home</li>';
+			$breadcrumb .= '</ol>';
+			
+			// assign created objects to the data object
+			$data->forums     = $forums;
+			$data->breadcrumb = $breadcrumb;
 			
 			// load views and send data
 			$this->load->view('header');
@@ -86,6 +92,12 @@ class Forum extends CI_Controller {
 			$forum    = $this->forum_model->get_forum($forum_id);
 			$topics   = $this->forum_model->get_forum_topics($forum_id);
 			
+			// create breadcrumb
+			$breadcrumb  = '<ol class="breadcrumb">';
+			$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+			$breadcrumb .= '<li class="active">' . $forum->title . '</li>';
+			$breadcrumb .= '</ol>';
+			
 			foreach ($topics as $topic) {
 				
 				$topic->author              = $this->user_model->get_username_from_user_id($topic->user_id);
@@ -98,8 +110,9 @@ class Forum extends CI_Controller {
 			}
 			
 			// assign created objects to the data object
-			$data->forum  = $forum;
-			$data->topics = $topics;
+			$data->forum      = $forum;
+			$data->topics     = $topics;
+			$data->breadcrumb = $breadcrumb;
 			
 			// load views and send data
 			$this->load->view('header');
@@ -121,6 +134,15 @@ class Forum extends CI_Controller {
 		
 		// create the data object
 		$data = new stdClass();
+		
+		// create breadcrumb
+		$breadcrumb  = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+		$breadcrumb .= '<li class="active">Create a new forum</li>';
+		$breadcrumb .= '</ol>';
+		
+		// assign breadcrumb to the data object
+		$data->breadcrumb = $breadcrumb;
 		
 		// load form helper and validation library
 		$this->load->helper('form');
@@ -185,6 +207,17 @@ class Forum extends CI_Controller {
 		// set variables from the the URI
 		$forum_slug = $this->uri->segment(1);
 		$forum_id   = $this->forum_model->get_forum_id_from_forum_slug($forum_slug);
+		$forum      = $this->forum_model->get_forum($forum_id);
+		
+		// create breadcrumb
+		$breadcrumb  = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+		$breadcrumb .= '<li><a href="/' . $forum->slug . '">' . $forum->title . '</a></li>';
+		$breadcrumb .= '<li class="active">Create a new topic</li>';
+		$breadcrumb .= '</ol>';
+		
+		// assign breadcrumb to the data object
+		$data->breadcrumb = $breadcrumb;
 		
 		// load form helper and validation library
 		$this->load->helper('form');
@@ -261,10 +294,18 @@ class Forum extends CI_Controller {
 			
 		}
 		
+		// create breadcrumb
+		$breadcrumb  = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+		$breadcrumb .= '<li><a href="/' . $forum->slug . '">' . $forum->title . '</a></li>';
+		$breadcrumb .= '<li class="active">' . $topic->title . '</li>';
+		$breadcrumb .= '</ol>';
+		
 		// assign created objects to the data object
-		$data->forum = $forum;
-		$data->topic = $topic;
-		$data->posts = $posts;
+		$data->forum      = $forum;
+		$data->topic      = $topic;
+		$data->posts      = $posts;
+		$data->breadcrumb = $breadcrumb;
 		
 		// load views and send data
 		$this->load->view('header');
@@ -303,10 +344,18 @@ class Forum extends CI_Controller {
 			
 		}
 		
+		// create breadcrumb
+		$breadcrumb  = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+		$breadcrumb .= '<li><a href="/' . $forum->slug . '">' . $forum->title . '</a></li>';
+		$breadcrumb .= '<li class="active">' . $topic->title . '</li>';
+		$breadcrumb .= '</ol>';
+		
 		// assign created objects to the data object
-		$data->forum = $forum;
-		$data->topic = $topic;
-		$data->posts = $posts;
+		$data->forum      = $forum;
+		$data->topic      = $topic;
+		$data->posts      = $posts;
+		$data->breadcrumb = $breadcrumb;
 		
 		// load form helper and validation library
 		$this->load->helper('form');

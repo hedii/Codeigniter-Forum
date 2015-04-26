@@ -2,6 +2,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<?= $breadcrumb ?>
+		</div>
+		<div class="col-md-12">
 			<div class="page-header">
 				<h1><?= $topic->title ?></h1>
 			</div>

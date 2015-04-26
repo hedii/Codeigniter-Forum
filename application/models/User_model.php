@@ -25,9 +25,9 @@ class User_model extends CI_Model {
 	 * create_user function.
 	 * 
 	 * @access public
-	 * @param mixed $username
-	 * @param mixed $email
-	 * @param mixed $password
+	 * @param string $username
+	 * @param string $email
+	 * @param string $password
 	 * @return bool true on success, false on failure
 	 */
 	public function create_user($username, $email, $password) {
@@ -47,8 +47,8 @@ class User_model extends CI_Model {
 	 * resolve_user_login function.
 	 * 
 	 * @access public
-	 * @param mixed $username
-	 * @param mixed $password
+	 * @param string $username
+	 * @param string $password
 	 * @return bool true on success, false on failure
 	 */
 	public function resolve_user_login($username, $password) {
@@ -66,7 +66,7 @@ class User_model extends CI_Model {
 	 * get_user_id_from_username function.
 	 * 
 	 * @access public
-	 * @param mixed $username
+	 * @param string $username
 	 * @return int the user id
 	 */
 	public function get_user_id_from_username($username) {
@@ -79,11 +79,21 @@ class User_model extends CI_Model {
 		
 	}
 	
+	public function get_username_from_user_id($user_id) {
+		
+		$this->db->select('username');
+		$this->db->from('users');
+		$this->db->where('id', $user_id);
+
+		return $this->db->get()->row('username');
+		
+	}
+	
 	/**
 	 * get_user function.
 	 * 
 	 * @access public
-	 * @param mixed $user_id
+	 * @param int $user_id
 	 * @return object the user object
 	 */
 	public function get_user($user_id) {
@@ -98,7 +108,7 @@ class User_model extends CI_Model {
 	 * hash_password function.
 	 * 
 	 * @access private
-	 * @param mixed $password
+	 * @param string $password
 	 * @return string|bool could be a string on success, or bool false on failure
 	 */
 	private function hash_password($password) {
@@ -111,8 +121,8 @@ class User_model extends CI_Model {
 	 * verify_password_hash function.
 	 * 
 	 * @access private
-	 * @param mixed $password
-	 * @param mixed $hash
+	 * @param string $password
+	 * @param string $hash
 	 * @return bool
 	 */
 	private function verify_password_hash($password, $hash) {

@@ -53,6 +53,12 @@ $route['register'] = 'user/register';
 $route['login'] = 'user/login';
 $route['logout'] = 'user/logout';
 
+$route['create_forum'] = 'forum/create_forum';
+$route['(:any)/create_topic'] = 'forum/create_topic/$1';
+$route['/'] = 'forum/index';
+$route['(:any)'] = 'forum/index/$1';
+$route['(:any)/(:any)'] = 'forum/topic/$1/$2';
+
 $route['default_controller'] = 'forum';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

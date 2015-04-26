@@ -22,11 +22,11 @@
 			<?= form_open() ?>
 				<div class="form-group">
 					<label for="title">Title</label>
-					<input type="text" class="form-control" id="title" name="title" placeholder="Enter a forum title">
+					<input type="text" class="form-control" id="title" name="title" placeholder="Enter a forum title" value="<?= $title ?>">
 				</div>
 				<div class="form-group">
 					<label for="description">Description</label>
-					<textarea rows="6" class="form-control" id="description" name="description" placeholder="Enter short description for the new forum (max 80 characters)"></textarea>
+					<textarea rows="6" class="form-control" id="description" name="description" placeholder="Enter short description for the new forum (max 80 characters)"><?= $description ?></textarea>
 				</div>
 				<div class="form-group">
 					<input type="submit" class="btn btn-default" value="Create forum">

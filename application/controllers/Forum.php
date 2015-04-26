@@ -132,6 +132,10 @@ class Forum extends CI_Controller {
 		
 		if ($this->form_validation->run() === false) {
 			
+			// keep what the user has entered previously on fields
+			$data->title       = $this->input->post('title');
+			$data->description = $this->input->post('description');
+			
 			// validation not ok, send validation errors to the view
 			$this->load->view('header');
 			$this->load->view('forum/create/create', $data);

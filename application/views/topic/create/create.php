@@ -1,6 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="container">
 	<div class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h1>Create a new topic</h1>
+			</div>
+		</div>
 		<?php if (validation_errors()) : ?>
 			<div class="col-md-12">
 				<div class="alert alert-danger" role="alert">
@@ -16,9 +21,6 @@
 			</div>
 		<?php endif; ?>
 		<div class="col-md-12">
-			<div class="page-header">
-				<h1>Create a new topic</h1>
-			</div>
 			<?= form_open() ?>
 				<div class="form-group">
 					<label for="title">Topic title</label>

@@ -38,7 +38,7 @@
 			<?= form_open() ?>
 				<div class="form-group">
 					<label for="reply">Reply</label>
-					<textarea rows="6" class="form-control" id="reply" name="reply" placeholder=""></textarea>
+					<textarea rows="6" class="form-control" id="reply" name="reply" placeholder=""><?= $content ?></textarea>
 				</div>
 				<div class="form-group">
 					<input type="submit" class="btn btn-default" value="Reply">

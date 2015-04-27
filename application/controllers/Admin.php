@@ -81,12 +81,72 @@ class Admin extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
-		$user_id    = $this->user_model->get_user_id_from_username($username);
-		$data->user = $this->user_model->get_user($user_id);
+		// create the user object
+		$user_id = $this->user_model->get_user_id_from_username($username);
+		$user    = $this->user_model->get_user($user_id);
 		
-		$this->load->view('header');
-		$this->load->view('admin/users/edit_user', $data);
-		$this->load->view('footer');
+		// set options
+		if ($user->is_admin === '1') {
+			$options  = '<option value="administrator" selected>Administrator</option>';
+			$options .= '<option value="moderator">Moderator</option>';
+			$options .= '<option value="user">User</option>';
+		} elseif ($user->is_moderator === '1') {
+			$options  = '<option value="administrator">Administrator</option>';
+			$options .= '<option value="moderator" selected>Moderator</option>';
+			$options .= '<option value="user">User</option>';
+		} else {
+			$options  = '<option value="administrator">Administrator</option>';
+			$options .= '<option value="moderator">Moderator</option>';
+			$options .= '<option value="user" selected>User</option>';
+		}
+		
+		// assign values to the data object
+		$data->user    = $user;
+		$data->options = $options;
+		if ($user->updated_by !== null) {
+			$data->user->updated_by = $this->user_model->get_username_from_user_id($user->updated_by);
+		}
+		
+		// load form helper and validation library
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		// set form validations rules
+		$this->form_validation->set_rules('user_rights', 'User Rights', 'required|in_list[administrator,moderator,user]', array('in_list' => 'Don\'t try to hack the form!'));
+		
+		if ($this->form_validation->run() == false) {
+			
+			$this->load->view('header');
+			$this->load->view('admin/users/edit_user', $data);
+			$this->load->view('footer');
+			
+		} else {
+			
+			// assign rights to variables
+			if ($this->input->post('user_rights') === 'administrator') {
+				$is_admin     = '1';
+				$is_moderator = '0';
+			} elseif ($this->input->post('user_rights') === 'moderator') {
+				$is_admin     = '0';
+				$is_moderator = '1';
+			} else {
+				$is_admin     = '0';
+				$is_moderator = '0';
+			}
+			
+			if ($this->admin_model->update_user_rights($user_id, $is_admin, $is_moderator)) {
+				// update user success
+				$data->success = $user->username . ' has successfully been updated.';
+			} else {
+				// error while updating user rights, this should never happen
+				$data->error = 'There was an error while trying to update this user. Please try again';
+			}
+			
+			$this->load->view('header');
+			$this->load->view('admin/users/edit_user', $data);
+			$this->load->view('footer');
+			
+		}
 		
 	}
 	

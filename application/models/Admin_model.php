@@ -21,4 +21,18 @@ class Admin_model extends CI_Model {
 		
 	}
 	
+	public function update_user_rights($user_id, $is_admin, $is_moderator) {
+		
+		$data = array(
+			'is_admin'     => $is_admin,
+			'is_moderator' => $is_moderator,
+			'updated_at'   => date('Y-m-j H:i:s'),
+			'updated_by'   => $_SESSION['user_id'],
+		);
+		
+		$this->db->where('id', $user_id);
+		return $this->db->update('users', $data);
+		
+	}
+	
 }

@@ -23,7 +23,7 @@
 								<th>#</th>
 								<th>Username</th>
 								<th>Rights</th>
-								<th>Registration date</th>
+								<th class="hidden-xs">Registration date</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -39,7 +39,7 @@
 									<?php else : ?>
 									<td>user</td>
 									<?php endif; ?>
-									<td><?= $user->created_at ?></td>
+									<td class="hidden-xs"><?= $user->created_at ?></td>
 									<td><a class="btn btn-xs btn-primary" href="<?= base_url('admin/edit_user/' . $user->username) ?>">Edit</a> <a class="btn btn-xs btn-danger" href="<?= base_url('admin/delete_user/' . $user->username) ?>">Delete</a></td>
 								</tr>
 							<?php endforeach; ?>

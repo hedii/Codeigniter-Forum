@@ -68,6 +68,7 @@ $route['user/(:any)'] = 'user/index/$1';
 $route['register'] = 'user/register';
 $route['login'] = 'user/login';
 $route['logout'] = 'user/logout';
+$route['email_validation'] = 'user/email_validation';
 
 /**
  * Forum routes

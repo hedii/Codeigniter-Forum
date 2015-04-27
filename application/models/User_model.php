@@ -189,6 +189,48 @@ class User_model extends CI_Model {
 	}
 	
 	/**
+	 * confirm_account function.
+	 * 
+	 * @access public
+	 * @param string $username
+	 * @param string $hash
+	 * @return bool
+	 */
+	public function confirm_account($username, $hash) {
+		
+		// find the email for the given user
+		$email = $this->db->select('email')
+			->from('users')
+			->where('username', $username)
+			->get()
+			->row('email');
+		
+		// find the registration date for the given user
+		$registration_date = $this->db->select('created_at')
+			->from('users')
+			->where('username', $username)
+			->get()
+			->row('created_at');
+
+		// if the user from the url exists
+		if ($email && $registration_date) {
+			
+			if (sha1($email . $registration_date) === $hash) {
+				
+				// values from the url are good, we can validate the account
+				$data = array('is_confirmed' => '1');
+				$this->db->where('username', $username);
+				return $this->db->update('users', $data);
+				
+			}
+			return false;
+			
+		}
+		return false;
+		
+	}
+	
+	/**
 	 * hash_password function.
 	 * 
 	 * @access private

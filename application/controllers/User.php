@@ -234,4 +234,32 @@ class User extends CI_Controller {
 		
 	}
 	
+	public function email_validation($username, $hash) {
+		
+		// create the data object
+		$data = new stdClass();
+		
+		// avoid blank at the end of the url
+		$hash = trim($hash);
+		
+		if ($this->user_model->confirm_account($username, $hash)) {
+			
+			// account validation ok
+			$data->success = 'Congratulation, your email address has been confirmed and your account is now validated! Please <a href="' . base_url('login') . '">login</a>.';
+			$this->load->view('header');
+			$this->load->view('user/register/confirmation', $data);
+			$this->load->view('footer');
+			
+		} else {
+			
+			// account validation failed
+			$data->error = 'An error has occurred, your email address cannot be validated. Please contact the website administrator.';
+			$this->load->view('header');
+			$this->load->view('user/register/confirmation', $data);
+			$this->load->view('footer');
+			
+		}
+		
+	}
+	
 }

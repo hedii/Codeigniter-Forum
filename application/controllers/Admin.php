@@ -54,12 +54,37 @@ class Admin extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
-		$users = $this->user_model->get_users();
-		
-		$data->users = $users;
+		$data->users = $this->user_model->get_users();
 		
 		$this->load->view('header');
 		$this->load->view('admin/users/users', $data);
+		$this->load->view('footer');
+		
+	}
+	
+	public function edit_user($username = false) {
+		
+		// if the user is not admin, redirect to base url
+		if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+			redirect(base_url());
+			return;
+		}
+		
+		if ($username === false) {
+			
+			redirect(base_url('admin/users'));
+			return;
+			
+		}
+		
+		// create the data object
+		$data = new stdClass();
+		
+		$user_id    = $this->user_model->get_user_id_from_username($username);
+		$data->user = $this->user_model->get_user($user_id);
+		
+		$this->load->view('header');
+		$this->load->view('admin/users/edit_user', $data);
 		$this->load->view('footer');
 		
 	}

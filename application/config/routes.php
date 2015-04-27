@@ -54,6 +54,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 $route['admin'] = 'admin/index';
 $route['admin/users'] = 'admin/users';
+$route['admin/edit_user'] = 'admin/edit_user';
+$route['admin/edit_user/(:any)'] = 'admin/edit_user/$1';
 $route['admin/forums_and_topics'] = 'admin/forums_and_topics';
 $route['admin/options'] = 'admin/options';
 $route['admin/emails'] = 'admin/emails';

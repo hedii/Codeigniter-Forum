@@ -104,6 +104,12 @@ class User_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_users function.
+	 * 
+	 * @access public
+	 * @return object
+	 */
 	public function get_users() {
 		
 		$this->db->from('users');

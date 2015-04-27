@@ -54,6 +54,10 @@ class Admin extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
+		$users = $this->user_model->get_users();
+		
+		$data->users = $users;
+		
 		$this->load->view('header');
 		$this->load->view('admin/users', $data);
 		$this->load->view('footer');

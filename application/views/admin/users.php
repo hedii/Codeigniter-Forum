@@ -16,6 +16,27 @@
 					<h3 class="panel-title">Users</h3>
 				</div>
 				<div class="panel-body">
+					<table class="table table-striped">
+						<caption></caption>
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Username</th>
+								<th>Registration date</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($users as $user) : ?>
+								<tr>
+									<td><?= $user->id ?></td>
+									<td><a href="<?= base_url('user/' . $user->username) ?>" target="_blank"><?= $user->username ?></a></td>
+									<td><?= $user->created_at ?></td>
+									<td><a class="btn btn-xs btn-primary" href="<?= base_url('admin/edit_user/' . $user->username) ?>">Edit</a> <a class="btn btn-xs btn-danger" href="<?= base_url('admin/delete_user/' . $user->username) ?>">Delete</a></td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
 					
 				</div>
 			</div>

@@ -104,6 +104,13 @@ class User_model extends CI_Model {
 		
 	}
 	
+	public function get_users() {
+		
+		$this->db->from('users');
+		return $this->db->get()->result();
+		
+	}
+	
 	/**
 	 * count_user_posts function.
 	 * 

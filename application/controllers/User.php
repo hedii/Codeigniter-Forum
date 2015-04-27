@@ -24,9 +24,57 @@ class User extends CI_Controller {
 	}
 	
 	
-	public function index() {
+	public function index($username = false) {
 		
-
+		if ($username === false) {
+			redirect(base_url());
+			return;
+		}
+		
+		// create the data object
+		$data = new stdClass();
+		
+		// load the forum model
+		$this->load->model('forum_model');
+		
+		// get user id from username
+		$user_id = $this->user_model->get_user_id_from_username($username);
+		
+		// create the user object
+		$user               = $this->user_model->get_user($user_id);
+		$user->count_topics = $this->user_model->count_user_topics($user_id);
+		$user->count_posts  = $this->user_model->count_user_posts($user_id);
+		$user->latest_post  = $this->user_model->get_user_last_post($user_id);
+		if ($user->latest_post !== null) {
+			$user->latest_post->topic            = $this->forum_model->get_topic($user->latest_post->topic_id);
+			$user->latest_post->topic->forum     = $this->forum_model->get_forum($user->latest_post->topic->forum_id);
+			$user->latest_post->topic->permalink = base_url($user->latest_post->topic->forum->slug . '/' . $user->latest_post->topic->slug);
+		} else {
+			$user->latest_post = new stdClass();
+			$user->latest_post->created_at = $user->username . ' has not posted yet';
+		}
+		$user->latest_topic = $this->user_model->get_user_last_topic($user_id);
+		if ($user->latest_topic !== null) {
+			$user->latest_topic->forum     = $this->forum_model->get_forum($user->latest_topic->forum_id);
+			$user->latest_topic->permalink = base_url($user->latest_topic->forum->slug . '/' . $user->latest_topic->slug);
+		} else {
+			$user->latest_topic        = new stdClass();
+			$user->latest_topic->title = $user->username . ' has not started a topic yet';
+		}
+		
+		// create breadcrumb
+		$breadcrumb  = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+		$breadcrumb .= '<li class="active">' . $username . '</li>';
+		$breadcrumb .= '</ol>';
+		
+		// assign created objects to the data object
+		$data->user       = $user;
+		$data->breadcrumb = $breadcrumb;
+		
+		$this->load->view('header');
+		$this->load->view('user/profile/profile', $data);
+		$this->load->view('footer');
 		
 	}
 	

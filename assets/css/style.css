@@ -1,3 +1,14 @@
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.avatar {
+	-webkit-border-radius: 50%;
+	   -moz-border-radius: 50%;
+	        border-radius: 50%;
+}
+
 .post-header {
 	margin-bottom: 10px;
 }

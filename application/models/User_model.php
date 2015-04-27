@@ -105,6 +105,68 @@ class User_model extends CI_Model {
 	}
 	
 	/**
+	 * count_user_posts function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return int
+	 */
+	public function count_user_posts($user_id) {
+		
+		$this->db->select('id');
+		$this->db->from('posts');
+		$this->db->where('user_id', $user_id);
+		return $this->db->get()->num_rows();
+		
+	}
+	
+	/**
+	 * count_user_topics function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return int
+	 */
+	public function count_user_topics($user_id) {
+		
+		$this->db->select('id');
+		$this->db->from('topics');
+		$this->db->where('user_id', $user_id);
+		return $this->db->get()->num_rows();
+		
+	}
+	
+	/**
+	 * get_user_last_post function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return mixed object or false if no post
+	 */
+	public function get_user_last_post($user_id) {
+		
+		$this->db->from('posts');
+		$this->db->where('user_id', $user_id);
+		return $this->db->get()->row();
+		
+	}
+	
+	/**
+	 * get_user_last_topic function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return object or false if no topic
+	 */
+	public function get_user_last_topic($user_id) {
+		
+		$this->db->from('topics');
+		$this->db->where('user_id', $user_id);
+		return $this->db->get()->row();
+		
+	}
+	
+	/**
 	 * hash_password function.
 	 * 
 	 * @access private

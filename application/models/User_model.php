@@ -39,7 +39,12 @@ class User_model extends CI_Model {
 			'created_at' => date('Y-m-j H:i:s'),
 		);
 		
-		return $this->db->insert('users', $data);
+		if ($this->db->insert('users', $data)) {
+			
+			//send confirmation email
+			return $this->send_confirmation_email($username, $email);
+			
+		}
 		
 	}
 	
@@ -207,6 +212,48 @@ class User_model extends CI_Model {
 	private function verify_password_hash($password, $hash) {
 		
 		return password_verify($password, $hash);
+		
+	}
+	
+	/**
+	 * send_confirmation_email function.
+	 * 
+	 * @access private
+	 * @param string $username
+	 * @param string $email
+	 * @return bool
+	 */
+	private function send_confirmation_email($username, $email) {
+		
+		// load email library and url helper
+		$this->load->library('email');
+		$this->load->helper('url');
+		
+		// initialize the email configuration
+		$this->email->initialize(array(
+			'mailtype' => 'html',
+			'charset'  => 'utf-8'
+		));
+		
+		// get user registration date
+		$registration_date = $this->db->select('created_at')->from('users')->where('username', $username)->get()->row('created_at');
+		
+		// create a user email hash with user email and user registration date
+		$hash = sha1($email . $registration_date);
+		
+		// prepare the email
+		$this->email->from('contact@youtube-mp4.fr', 'contact@youtube-mp4.fr'); // only for tests
+		$this->email->to($email);
+		$this->email->subject('Please confirm your email to validate your new user account.');
+		$message  = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
+		$message .= "Hi " . $username . ",<br><br>";
+		$message .= "Please click the link below to confirm your account on " . base_url() . "<br><br>";
+		$message .= "Click this link: <a href=\"" . base_url() . "user/email_validation/" . $username . "/" . $hash . "\">Confirm your email and validate your account</a>";
+		$message .= "</body></html>";
+		$this->email->message($message);
+		
+		// send the email and return status
+		return $this->email->send();
 		
 	}
 	

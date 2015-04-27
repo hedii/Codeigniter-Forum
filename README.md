@@ -1,5 +1,5 @@
 # Codeigniter-Forum
-A complete forum system based on Codeigniter 3.x
+A complete forum application based on Codeigniter 3.x
 
 DON'T USE IT AS IT IS IN A PRODUCTION SERVER, THIS FORUM APP IS STILL IN DEVELOPMENT.
 

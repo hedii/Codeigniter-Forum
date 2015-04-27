@@ -17,7 +17,6 @@
 				</div>
 			</div>
 		<?php else : ?>
-		
 			<?php if (validation_errors()) : ?>
 				<div class="col-md-12">
 					<div class="alert alert-danger" role="alert">
@@ -47,7 +46,6 @@
 					</div>
 				</form>
 			</div>
-			
 		<?php endif; ?>
 	</div><!-- .row -->
 </div><!-- .container -->

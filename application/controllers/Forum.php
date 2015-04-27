@@ -135,6 +135,13 @@ class Forum extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
+		// if the user is not logged in as administrator, he cannot create a new forum
+		if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+			$data->login_as_admin_needed = true;
+		} else {
+			$data->login_as_admin_needed = false;
+		}
+		
 		// create breadcrumb
 		$breadcrumb  = '<ol class="breadcrumb">';
 		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
@@ -207,6 +214,8 @@ class Forum extends CI_Controller {
 		// if the user is not logged in, he cannot create a new topic
 		if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 			$data->login_needed = true;
+		} else {
+			$data->login_needed = false;
 		}
 		
 		// set variables from the the URI

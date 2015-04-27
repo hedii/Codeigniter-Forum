@@ -5,6 +5,18 @@ DON'T USE IT AS IT IS IN A PRODUCTION SERVER, THIS FORUM APP IS STILL IN DEVELOP
 
 I will update this repository frequently.
 
+## Features
+- login, logout, register
+- email verification to confirm a user account
+- administration area
+- admin can edit user rights (administrator, moderator, user)
+- forum creation for admin
+- topics creation for logged in users
+- topics post reply for logged in users
+- nice SEO friendly URLS
+- No specific styles (just twitter bootstrap default styles)
+- ...a lot of other functionalities coming soon...
+
 ## Installation
 1. Clone this repository on your server
 2. Create a database
@@ -78,15 +90,3 @@ CREATE TABLE IF NOT EXISTS `options` (
 ```
 
 Go to http://example.com/register create a user, and assign him manualy admin rights on the users table (this will be handled automaticaly soon).
-
-## Features
-- login, logout, register
-- email verification to confirm a user account
-- administration area
-- admin can edit user rights (administrator, moderator, user)
-- forum creation for admin
-- topics creation for logged in users
-- topics post reply for logged in users
-- nice SEO friendly URLS
-- No specific styles (just twitter bootstrap default styles)
-- ...a lot of other functionalities coming soon...

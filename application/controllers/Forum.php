@@ -204,6 +204,11 @@ class Forum extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
+		// if the user is not logged in, he cannot create a new topic
+		if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+			$data->login_needed = true;
+		}
+		
 		// set variables from the the URI
 		$forum_slug = $this->uri->segment(1);
 		$forum_id   = $this->forum_model->get_forum_id_from_forum_slug($forum_slug);

@@ -21,6 +21,7 @@ class Admin extends CI_Controller {
 		$this->load->helper(array('url'));
 		$this->load->model('forum_model');
 		$this->load->model('user_model');
+		$this->load->model('admin_model');
 		
 		//$this->output->enable_profiler(TRUE);
 		

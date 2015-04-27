@@ -36,6 +36,9 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<?php if (isset($_SESSION['username']) && $_SESSION['logged_in'] === true) : ?>
+							<?php if ($_SESSION['is_admin'] === true) : ?>
+								<li><a href="<?= base_url('admin') ?>">Admin</a></li>
+							<?php endif; ?>
 							<li><a href="<?= base_url('user/' . $_SESSION['username']) ?>">Profile</a></li>
 							<li><a href="<?= base_url('logout') ?>">Logout</a></li>
 						<?php else : ?>

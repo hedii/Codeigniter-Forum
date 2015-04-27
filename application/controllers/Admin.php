@@ -28,7 +28,18 @@ class Admin extends CI_Controller {
 	
 	public function index() {
 		
+		// if the user is not admin, redirect to base url
+		if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+			redirect(base_url());
+			return;
+		}
 		
+		// create the data object
+		$data = new stdClass();
+		
+		$this->load->view('header');
+		$this->load->view('admin/index', $data);
+		$this->load->view('footer');
 		
 	}
 	

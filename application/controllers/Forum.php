@@ -343,6 +343,13 @@ class Forum extends CI_Controller {
 		// create the data object
 		$data = new stdClass();
 		
+		// if the user is not logged in, he cannot reply to a topic
+		if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+			$data->login_needed = true;
+		} else {
+			$data->login_needed = false;
+		}
+		
 		// get ids from slugs
 		$forum_id = $this->forum_model->get_forum_id_from_forum_slug($forum_slug);
 		$topic_id = $this->forum_model->get_topic_id_from_topic_slug($topic_slug);

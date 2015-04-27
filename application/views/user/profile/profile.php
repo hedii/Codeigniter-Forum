@@ -38,4 +38,4 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
-<?php var_dump($user); ?>
+<?php //var_dump($user); ?>

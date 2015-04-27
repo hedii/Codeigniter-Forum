@@ -147,6 +147,8 @@ class User_model extends CI_Model {
 		
 		$this->db->from('posts');
 		$this->db->where('user_id', $user_id);
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(1);
 		return $this->db->get()->row();
 		
 	}
@@ -162,6 +164,8 @@ class User_model extends CI_Model {
 		
 		$this->db->from('topics');
 		$this->db->where('user_id', $user_id);
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(1);
 		return $this->db->get()->row();
 		
 	}

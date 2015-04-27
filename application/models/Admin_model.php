@@ -21,6 +21,15 @@ class Admin_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * update_user_rights function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param bool $is_admin
+	 * @param bool $is_moderator
+	 * @return bool
+	 */
 	public function update_user_rights($user_id, $is_admin, $is_moderator) {
 		
 		$data = array(

@@ -84,6 +84,13 @@ class User_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * get_username_from_user_id function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return string
+	 */
 	public function get_username_from_user_id($user_id) {
 		
 		$this->db->select('username');

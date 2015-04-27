@@ -23,7 +23,13 @@ class User extends CI_Controller {
 		
 	}
 	
-	
+	/**
+	 * index function.
+	 * 
+	 * @access public
+	 * @param mixed $username (default: false)
+	 * @return void
+	 */
 	public function index($username = false) {
 		
 		if ($username === false) {
@@ -234,6 +240,14 @@ class User extends CI_Controller {
 		
 	}
 	
+	/**
+	 * email_validation function.
+	 * 
+	 * @access public
+	 * @param string $username
+	 * @param string $hash
+	 * @return void
+	 */
 	public function email_validation($username, $hash) {
 		
 		// create the data object

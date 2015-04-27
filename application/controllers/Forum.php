@@ -121,8 +121,7 @@ class Forum extends CI_Controller {
 			
 		}
 		
-	}
-	
+	}	
 	
 	/**
 	 * create function.

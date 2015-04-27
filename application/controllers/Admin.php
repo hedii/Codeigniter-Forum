@@ -63,6 +63,13 @@ class Admin extends CI_Controller {
 		
 	}
 	
+	/**
+	 * edit_user function.
+	 * 
+	 * @access public
+	 * @param mixed $username (default: false)
+	 * @return void
+	 */
 	public function edit_user($username = false) {
 		
 		// if the user is not admin, redirect to base url

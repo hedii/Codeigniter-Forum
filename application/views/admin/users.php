@@ -22,6 +22,7 @@
 							<tr>
 								<th>#</th>
 								<th>Username</th>
+								<th>Rights</th>
 								<th>Registration date</th>
 								<th>Action</th>
 							</tr>
@@ -31,6 +32,13 @@
 								<tr>
 									<td><?= $user->id ?></td>
 									<td><a href="<?= base_url('user/' . $user->username) ?>" target="_blank"><?= $user->username ?></a></td>
+									<?php if ($user->is_admin) : ?>
+									<td>admin</td>
+									<?php elseif ($user->is_moderator) : ?>
+									<td>mod</td>
+									<?php else : ?>
+									<td>user</td>
+									<?php endif; ?>
 									<td><?= $user->created_at ?></td>
 									<td><a class="btn btn-xs btn-primary" href="<?= base_url('admin/edit_user/' . $user->username) ?>">Edit</a> <a class="btn btn-xs btn-danger" href="<?= base_url('admin/delete_user/' . $user->username) ?>">Delete</a></td>
 								</tr>
@@ -43,3 +51,5 @@
 		</div>
 	</div><!-- .row -->
 </div><!-- .container -->
+
+<?php //var_dump($users); ?>

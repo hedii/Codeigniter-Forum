@@ -38,7 +38,7 @@ class Admin extends CI_Controller {
 		$data = new stdClass();
 		
 		$this->load->view('header');
-		$this->load->view('admin/home', $data);
+		$this->load->view('admin/home/index', $data);
 		$this->load->view('footer');
 		
 	}
@@ -59,7 +59,7 @@ class Admin extends CI_Controller {
 		$data->users = $users;
 		
 		$this->load->view('header');
-		$this->load->view('admin/users', $data);
+		$this->load->view('admin/users/users', $data);
 		$this->load->view('footer');
 		
 	}
@@ -76,7 +76,7 @@ class Admin extends CI_Controller {
 		$data = new stdClass();
 		
 		$this->load->view('header');
-		$this->load->view('admin/forums_and_topics', $data);
+		$this->load->view('admin/forums_and_topics/forums_and_topics', $data);
 		$this->load->view('footer');
 		
 	}
@@ -93,7 +93,7 @@ class Admin extends CI_Controller {
 		$data = new stdClass();
 		
 		$this->load->view('header');
-		$this->load->view('admin/options', $data);
+		$this->load->view('admin/options/options', $data);
 		$this->load->view('footer');
 		
 	}
@@ -110,7 +110,7 @@ class Admin extends CI_Controller {
 		$data = new stdClass();
 		
 		$this->load->view('header');
-		$this->load->view('admin/emails', $data);
+		$this->load->view('admin/emails/emails', $data);
 		$this->load->view('footer');
 		
 	}

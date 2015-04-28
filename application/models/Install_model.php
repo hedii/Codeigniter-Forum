@@ -448,6 +448,12 @@ class Install_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * delete_installation_files function.
+	 * 
+	 * @access public
+	 * @return true ???? MUST FIX
+	 */
 	public function delete_installation_files() {
 		
 		$installation_items = array(
@@ -464,6 +470,13 @@ class Install_model extends CI_Model {
 		
 	}
 	
+	/**
+	 * delete_files function.
+	 * 
+	 * @access private
+	 * @param string $target
+	 * @return void
+	 */
 	private function delete_files($target) {
 		
 		if (is_dir($target)) {
@@ -479,6 +492,5 @@ class Install_model extends CI_Model {
 		}
 		
 	}
-	
 
 }

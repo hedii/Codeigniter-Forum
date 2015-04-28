@@ -23,6 +23,12 @@ class Install extends CI_Controller {
 		
 	}
 	
+	/**
+	 * index function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function index() {
 		
 		$data = (object)[];
@@ -121,6 +127,12 @@ class Install extends CI_Controller {
 		
 	}
 	
+	/**
+	 * database_creation function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function database_creation() {
 		
 		$data = (object)[];
@@ -159,6 +171,12 @@ class Install extends CI_Controller {
 		
 	}
 	
+	/**
+	 * tables_creation function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function tables_creation() {
 	
 		$data = (object)[];
@@ -196,6 +214,12 @@ class Install extends CI_Controller {
 	
 	}
 	
+	/**
+	 * site_settings function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function site_settings() {
 		
 		$data = (object)[];
@@ -205,7 +229,6 @@ class Install extends CI_Controller {
 			// empty value and expiration one hour before
 			setcookie('db_name', '', time() - 3600);
 		}
-		
 		
 		// form validation
 		$this->form_validation->set_rules('install_base_url', 'Base url', 'trim|required|max_length[255]');
@@ -284,6 +307,12 @@ class Install extends CI_Controller {
 		
 	}
 	
+	/**
+	 * finish function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function finish() {
 		
 		$data = (object)[];
@@ -292,9 +321,14 @@ class Install extends CI_Controller {
 		$this->load->view('install/install_finish', $data);
 		$this->load->view('footer', $data);
 		
-		
 	}
 	
+	/**
+	 * delete_files function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function delete_files() {
 		
 		$data = (object)[];
@@ -305,7 +339,6 @@ class Install extends CI_Controller {
 		} else {
 			echo 'Unable to delete installation files, please do it manually.';
 		}
-		
 		
 	}
 	

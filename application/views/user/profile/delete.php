@@ -20,4 +20,4 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
-<?php //var_dump($user); ?>
+<?php session_destroy() ?>

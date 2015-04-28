@@ -271,9 +271,23 @@ class User_model extends CI_Model {
 	 */
 	public function delete_user($user_id) {
 		
+		// delete all user topics, posts and delete user account
+		$this->db->where('id', $user_id);
+		if ($this->db->delete('users')) {
+			$this->db->where('user_id', $user_id);
+			if ($this->db->delete('topics')) {
+				$this->db->where('user_id', $user_id);
+				return $this->db->delete('posts');
+			}
+			return false;
+		}
+		return false;
+		
+		/* OLD
 		$data = array('is_deleted' => '1');
 		$this->db->where('id', $user_id);
 		return $this->db->update('users', $data);
+		*/
 		
 	}
 	

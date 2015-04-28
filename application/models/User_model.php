@@ -238,6 +238,31 @@ class User_model extends CI_Model {
 	}
 	
 	/**
+	 * update_user function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param array $update_data
+	 * @return bool
+	 */
+	public function update_user($user_id, $update_data) {
+		
+		// if user wants to update its password, hash the given password
+		if (array_key_exists('password', $update_data)) {
+			$update_data['password'] = $this->hash_password($update_data['password']);
+		}
+		
+		if (!empty($update_data)) {
+			
+			$this->db->where('id', $user_id);
+			return $this->db->update('users', $update_data);
+			
+		}
+		return false;
+		
+	}
+	
+	/**
 	 * hash_password function.
 	 * 
 	 * @access private

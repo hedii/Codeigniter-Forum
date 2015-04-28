@@ -65,6 +65,7 @@ $route['admin/emails'] = 'admin/emails';
  */
 $route['user'] = 'user/index';
 $route['user/(:any)'] = 'user/index/$1';
+$route['user/(:any)/edit'] = 'user/edit/$1';
 $route['register'] = 'user/register';
 $route['login'] = 'user/login';
 $route['logout'] = 'user/logout';

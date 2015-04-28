@@ -110,7 +110,7 @@ class User extends CI_Controller {
 		$this->load->library('form_validation');
 		
 		// set validation rules
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|min_length[4]|is_unique[users.username]', array('is_unique' => 'This username already exists. Please choose another one.'));
+		$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|min_length[4]|max_length[20]|is_unique[users.username]', array('is_unique' => 'This username already exists. Please choose another one.'));
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]');
 		$this->form_validation->set_rules('password_confirm', 'Confirm Password', 'trim|required|min_length[6]|matches[password]');
@@ -283,6 +283,173 @@ class User extends CI_Controller {
 			$this->load->view('footer');
 			
 		}
+		
+	}
+	
+	/**
+	 * edit function.
+	 * 
+	 * @access public
+	 * @param mixed $username (default: false)
+	 * @return void
+	 */
+	public function edit($username = false) {
+		
+		// a user cann only edit his own profile
+		if ($username === false || $username !== $_SESSION['username']) {
+			redirect(base_url());
+			return;
+		}
+		
+		// create the data object
+		$data = new stdClass();
+		
+		// load form helper and form validation library
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		// form validation 
+		$password_required_if = $this->input->post('password') ? '|required' : ''; // if there is something on password input, current password is required
+		$this->form_validation->set_rules('username', 'Username', 'trim|min_length[4]|max_length[20]|alpha_numeric|is_unique[users.username]', array('is_unique' => 'This username already exists. Please choose another username.'));
+		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|is_unique[users.email]', array('is_unique' => 'The email you entered already exists in our database.'));
+		$this->form_validation->set_rules('current_password', 'Current Password', 'trim' . $password_required_if . '|callback_verify_current_password');
+		$this->form_validation->set_rules('password', 'New Password', 'trim|min_length[6]|matches[password_confirm]');
+		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'trim|min_length[6]');
+		
+		// get the user object
+		$user_id = $this->user_model->get_user_id_from_username($username);
+		$user    = $this->user_model->get_user($user_id);
+		
+		// create breadcrumb
+		$breadcrumb  = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+		$breadcrumb .= '<li><a href="' . base_url('user/' . $username) . '">' . $username . '</a></li>';
+		$breadcrumb .= '<li class="active">Edit</li>';
+		$breadcrumb .= '</ol>';
+		
+		// assign objects to the data object
+		$data->user       = $user;
+		$data->breadcrumb = $breadcrumb;
+		
+		if ($this->form_validation->run() === false) {
+			
+			// validation not ok, send validation errors to the view
+			$this->load->view('header');
+			$this->load->view('user/profile/edit', $data);
+			$this->load->view('footer');
+			
+		} else {
+			
+			$user_id = $_SESSION['user_id'];
+			$update_data = [];
+			
+			if ($this->input->post('username') != '') {
+				$update_data['username'] = $this->input->post('username');
+			}
+			if ($this->input->post('email') != '') {
+				$update_data['email'] = $this->input->post('email');
+			}
+			if ($this->input->post('password') != '') {
+				$update_data['password'] = $this->input->post('password');
+			}
+			
+			// avatar upload
+			if (isset($_FILES['userfile']['name']) && !empty($_FILES['userfile']['name'])) {
+				
+				// setup upload configuration and load upload library
+				$config['upload_path']      = './uploads/avatars/';
+				$config['allowed_types']    = 'gif|jpg|png';
+				$config['max_size']         = 2048;
+				$config['max_width']        = 1024;
+				$config['max_height']       = 1024;
+				$config['file_ext_tolower'] = true;
+				$config['encrypt_name']     = true;			
+				$this->load->library('upload', $config);
+				
+				if (!$this->upload->do_upload()) {
+					
+					// upload NOT ok
+					$error = array('error' => $this->upload->display_errors());
+					$this->load->view('upload_form', $error);
+				
+				} else {
+					
+					// Upload ok send name to $updated_data
+					$update_data['avatar'] = $this->upload->data('file_name');
+					
+				}
+				
+			}
+			
+			// if everything is ok
+			if ($this->user_model->update_user($user_id, $update_data)) {
+				
+				// if username change, update session
+				if(isset($update_data['username'])) {
+					$_SESSION['username'] = $update_data['username'];
+					if ($this->input->post('username') != '') {
+						// a little hook to send success message the new profil edit url if the username was updated
+						$_SESSION['flash']    = 'Your profile has been successfully updated!';
+					}
+				}
+				
+				// fix the fact that a new avatar was not shown until page refresh
+				if(isset($update_data['avatar'])) {
+					$data->user->avatar = $update_data['avatar'];
+				}
+				
+				if ($this->input->post('username') != '') {
+					
+					// redirect to the new profile edit url
+					redirect(base_url('user/' . $update_data['username'] . '/edit'));
+					
+				} else {
+					
+					// create a success message
+					$data->success = 'Your profile has been successfully updated!';
+					
+					// send success message to the views
+					$this->load->view('header');
+					$this->load->view('user/profile/edit', $data);
+					$this->load->view('footer');
+					
+				}
+				
+			} else {
+				
+				// update user not ok : this should never happen
+				$data->error = 'There was a problem updating your account. Please try again.';
+				
+				//send errors to the views
+				$this->load->view('header');
+				$this->load->view('user/profile/edit', $data);
+				$this->load->view('footer');
+				
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * verify_current_password function.
+	 * 
+	 * @access public
+	 * @param string $str
+	 * @return bool
+	 */
+	public function verify_current_password($str) {
+		
+		if ($str != '') {
+			
+			if ($this->user_model->resolve_user_login($_SESSION['username'], $str) === true) {
+				return true;
+			}
+			$this->form_validation->set_message('verify_current_password', 'The {field} field does not match your password.');
+			return false;
+			
+		}
+		return true;
 		
 	}
 	

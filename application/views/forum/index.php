@@ -27,7 +27,7 @@
 							<tr>
 								<td>
 									<p>
-										<a href="<?= $forum->slug ?>"><?= $forum->title ?></a><br>
+										<a href="<?= base_url($forum->slug) ?>"><?= $forum->title ?></a><br>
 										<small><?= $forum->description ?></small>
 									</p>
 								</td>
@@ -43,7 +43,7 @@
 								</td>
 								<td class="hidden-xs">
 									<p>
-										<small><a href="<?= $forum->latest_topic->permalink ?>"><?= $forum->latest_topic->author ?></a><br><?= $forum->latest_topic->created_at ?></small></p>
+										<small><a href="<?= base_url($forum->latest_topic->permalink) ?>"><?= $forum->latest_topic->author ?></a><br><?= $forum->latest_topic->created_at ?></small></p>
 								</td>
 							</tr>
 						<?php endforeach; ?>

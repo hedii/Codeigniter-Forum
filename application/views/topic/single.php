@@ -15,7 +15,7 @@
 				<article class="panel panel-default">
 					<div class="panel-body">
 						<header class="post-header">
-							<small><a href=""><?= $post->author ?></a>, <?= $post->created_at ?></small>
+							<small><a href="<?= base_url('user/' . $post->author) ?>"><?= $post->author ?></a>, <?= $post->created_at ?></small>
 						</header>
 						<div class="post-content">
 							<?= $post->content ?>

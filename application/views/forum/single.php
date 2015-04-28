@@ -27,8 +27,8 @@
 							<tr>
 								<td>
 									<p>
-										<a href="<?= $topic->permalink ?>"><?= $topic->title ?></a><br>
-										<small>created by <a href="<!-- author permalink -->"><?= $topic->author ?></a>, <?= $topic->created_at ?></small>
+										<a href="<?= base_url($topic->permalink) ?>"><?= $topic->title ?></a><br>
+										<small>created by <a href="<?= base_url('user/' . $topic->author) ?>"><?= $topic->author ?></a>, <?= $topic->created_at ?></small>
 									</p>
 								</td>
 								<td>
@@ -38,7 +38,7 @@
 								</td>
 								<td class="hidden-xs">
 									<p>
-										<small>by <a href="<!-- author permalink -->"><?= $topic->latest_post->author ?></a><br><?= $topic->latest_post->created_at ?></small></p>
+										<small>by <a href="<?= base_url('user/' . $topic->latest_post->author) ?>"><?= $topic->latest_post->author ?></a><br><?= $topic->latest_post->created_at ?></small></p>
 								</td>
 							</tr>
 						<?php endforeach; ?>
@@ -58,4 +58,4 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
-<?php //var_dump($forum); ?>
+<?php //var_dump($forum, $topics); ?>

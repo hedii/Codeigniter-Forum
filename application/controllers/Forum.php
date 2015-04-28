@@ -100,12 +100,12 @@ class Forum extends CI_Controller {
 			
 			foreach ($topics as $topic) {
 				
-				$topic->author              = $this->user_model->get_username_from_user_id($topic->user_id);
-				$topic->permalink           = $slug . '/' . $topic->slug;
-				$topic->posts               = $this->forum_model->get_posts($topic->id);
-				$topic->count_posts         = count($topic->posts);
-				$topic->latest_post         = $this->forum_model->get_topic_latest_post($topic->id);
-				$topic->latest_post->author = $this->user_model->get_username_from_user_id($topic->latest_post->user_id);
+				$topic->author                  = $this->user_model->get_username_from_user_id($topic->user_id);
+				$topic->permalink               = $slug . '/' . $topic->slug;
+				$topic->posts                   = $this->forum_model->get_posts($topic->id);
+				$topic->count_posts             = count($topic->posts);
+				$topic->latest_post             = $this->forum_model->get_topic_latest_post($topic->id);
+				$topic->latest_post->author     = $this->user_model->get_username_from_user_id($topic->latest_post->user_id);
 				
 			}
 			
@@ -225,7 +225,7 @@ class Forum extends CI_Controller {
 		// create breadcrumb
 		$breadcrumb  = '<ol class="breadcrumb">';
 		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
-		$breadcrumb .= '<li><a href="/' . $forum->slug . '">' . $forum->title . '</a></li>';
+		$breadcrumb .= '<li><a href="' . base_url($forum->slug) . '">' . $forum->title . '</a></li>';
 		$breadcrumb .= '<li class="active">Create a new topic</li>';
 		$breadcrumb .= '</ol>';
 		
@@ -310,7 +310,7 @@ class Forum extends CI_Controller {
 		// create breadcrumb
 		$breadcrumb  = '<ol class="breadcrumb">';
 		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
-		$breadcrumb .= '<li><a href="/' . $forum->slug . '">' . $forum->title . '</a></li>';
+		$breadcrumb .= '<li><a href="' . base_url($forum->slug) . '">' . $forum->title . '</a></li>';
 		$breadcrumb .= '<li class="active">' . $topic->title . '</li>';
 		$breadcrumb .= '</ol>';
 		
@@ -324,8 +324,6 @@ class Forum extends CI_Controller {
 		$this->load->view('header');
 		$this->load->view('topic/single', $data);
 		$this->load->view('footer');
-		
-		//var_dump($forum, $topic, $posts);
 		
 	}
 	
@@ -367,7 +365,7 @@ class Forum extends CI_Controller {
 		// create breadcrumb
 		$breadcrumb  = '<ol class="breadcrumb">';
 		$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
-		$breadcrumb .= '<li><a href="/' . $forum->slug . '">' . $forum->title . '</a></li>';
+		$breadcrumb .= '<li><a href="' . base_url($forum->slug) . '">' . $forum->title . '</a></li>';
 		$breadcrumb .= '<li class="active">' . $topic->title . '</li>';
 		$breadcrumb .= '</ol>';
 		

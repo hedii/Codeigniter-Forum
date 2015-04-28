@@ -6,7 +6,7 @@
 		</div>
 		<div class="col-md-12">
 			<div class="page-header">
-				<h1>User profile <small><?= $user->username ?></small></h1>
+				<h1>User profile <small><?= $user->username ?></small> <?= $edit_button ?></h1>
 			</div>
 		</div>
 		<div class="col-md-12">

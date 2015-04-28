@@ -74,9 +74,19 @@ class User extends CI_Controller {
 		$breadcrumb .= '<li class="active">' . $username . '</li>';
 		$breadcrumb .= '</ol>';
 		
+		// create a button to permit profile edition
+		$edit_button = '<a href="' . base_url('user/' . $user->username . '/edit') . '" class="btn btn-xs btn-success">Edit your profile</a>';
+		
 		// assign created objects to the data object
 		$data->user       = $user;
 		$data->breadcrumb = $breadcrumb;
+		if (isset($_SESSION['username']) && $_SESSION['username'] === $username) {
+			// user is on his own profile
+			$data->edit_button = $edit_button;
+		} else {
+			// user is not on his own profile
+			$data->edit_button = null;
+		}
 		
 		$this->load->view('header');
 		$this->load->view('user/profile/profile', $data);

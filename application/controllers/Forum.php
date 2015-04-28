@@ -62,6 +62,7 @@ class Forum extends CI_Controller {
 					// $forum doesn't have topics yet
 					$forum->latest_topic = new stdClass();
 					$forum->latest_topic->permalink = null;
+					$forum->latest_topic->title = null;
 					$forum->latest_topic->author = null;
 					$forum->latest_topic->created_at = null;
 					

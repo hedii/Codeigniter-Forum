@@ -42,8 +42,15 @@
 									</p>
 								</td>
 								<td class="hidden-xs">
-									<p>
-										<small><a href="<?= base_url($forum->latest_topic->permalink) ?>"><?= $forum->latest_topic->author ?></a><br><?= $forum->latest_topic->created_at ?></small></p>
+									<?php if ($forum->latest_topic->title !== null) : ?>
+										<p>
+											<small><a href="<?= base_url($forum->latest_topic->permalink) ?>"><?= $forum->latest_topic->title ?></a><br>by <a href="<?= base_url('user/' . $forum->latest_topic->author) ?>"><?= $forum->latest_topic->author ?></a>, <?= $forum->latest_topic->created_at ?></small>
+										</p>
+									<?php else : ?>
+										<p>
+											<small>no topic yet</small>
+										</p>
+									<?php endif; ?>
 								</td>
 							</tr>
 						<?php endforeach; ?>
@@ -62,4 +69,4 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
-<?php //var_dump($forums); ?>
+<?php var_dump($forums); ?>

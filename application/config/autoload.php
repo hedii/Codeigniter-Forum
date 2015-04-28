@@ -104,7 +104,7 @@ $autoload['helper'] = array();
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('forum');
 
 
 /*

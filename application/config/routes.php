@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | There are three reserved routes:
 |
-|	$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'forum';
 |
 | This route indicates which controller class should be loaded if the
 | URI contains no data. In the above example, the "welcome" class
@@ -49,6 +49,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+/**
+ * Install routes
+ */
+$route['install'] = 'install/index';
+$route['install/database_creation'] = 'install/database_creation';
+$route['install/tables_creation'] = 'install/tables_creation';
+$route['install/site_settings'] = 'install/site_settings';
+$route['install/finish'] = 'install/finish';
+$route['install/delete_files'] = 'install/delete_files';
+
 /**
  * Admin routes
  */
@@ -77,7 +87,7 @@ $route['email_validation'] = 'user/email_validation';
  */
 $route['create_forum'] = 'forum/create_forum';
 $route['(:any)/create_topic'] = 'forum/create_topic/$1';
-$route['/'] = 'forum/index';
+//$route['/'] = 'forum/index';
 $route['(:any)'] = 'forum/index/$1';
 $route['(:any)/(:any)'] = 'forum/topic/$1/$2';
 $route['(:any)/(:any)/reply'] = 'forum/create_post/$1/$2';
@@ -85,6 +95,6 @@ $route['(:any)/(:any)/reply'] = 'forum/create_post/$1/$2';
 /**
  * Other routes
  */
-$route['default_controller'] = 'forum';
+$route['default_controller'] = 'install';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

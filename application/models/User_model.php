@@ -263,6 +263,21 @@ class User_model extends CI_Model {
 	}
 	
 	/**
+	 * delete_user function.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return bool
+	 */
+	public function delete_user($user_id) {
+		
+		$data = array('is_deleted' => '1');
+		$this->db->where('id', $user_id);
+		return $this->db->update('users', $data);
+		
+	}
+	
+	/**
 	 * hash_password function.
 	 * 
 	 * @access private

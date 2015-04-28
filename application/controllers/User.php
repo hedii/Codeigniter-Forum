@@ -432,6 +432,68 @@ class User extends CI_Controller {
 	}
 	
 	/**
+	 * delete function.
+	 * 
+	 * @access public
+	 * @param mixed $username (default: false)
+	 * @return void
+	 */
+	public function delete($username = false) {
+		
+		// a user cann only delete his own profile and must be logged in
+		if ($username == false || !isset($_SESSION['username']) || $username !== $_SESSION['username']) {
+			redirect(base_url());
+			return;
+		}
+		
+		// create the data object
+		$data = new stdClass();
+		
+		if ($_SESSION['username'] === $username) {
+			
+			// create breadcrumb
+			$breadcrumb  = '<ol class="breadcrumb">';
+			$breadcrumb .= '<li><a href="' . base_url() . '">Home</a></li>';
+			$breadcrumb .= '<li><a href="' . base_url('user/' . $username) . '">' . $username . '</a></li>';
+			$breadcrumb .= '<li class="active">Delete</li>';
+			$breadcrumb .= '</ol>';
+			
+			$user_id          = $this->user_model->get_user_id_from_username($username);
+			$data->user       = $this->user_model->get_user($user_id);
+			$data->breadcrumb = $breadcrumb;
+			
+			if ($this->user_model->delete_user($user_id)) {
+				
+				$data->success = 'Your user account has been successfully deleted. Bye bye :(';
+				
+				// user delete ok, load views
+				$this->load->view('header');
+				$this->load->view('user/profile/delete', $data);
+				$this->load->view('footer');
+				
+			} else {
+				
+				// user delete not ok, this should never happen
+				$data->error = 'There was a problem deleting your user account. Please contact an administrator.';
+				
+				// send errors to the views
+				$this->load->view('header');
+				$this->load->view('user/profile/edit', $data);
+				$this->load->view('footer');
+				
+			}
+			
+		} else {
+			
+			// a user cann only delete his own profile and must be logged in
+			redirect(base_url());
+			return;
+			
+		}
+		
+	}
+	
+	/**
 	 * verify_current_password function.
 	 * 
 	 * @access public

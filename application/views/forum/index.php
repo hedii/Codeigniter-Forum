@@ -69,4 +69,4 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
-<?php var_dump($forums); ?>
+<?php //var_dump($forums); ?>

@@ -95,6 +95,6 @@ $route['(:any)/(:any)/reply'] = 'forum/create_post/$1/$2';
 /**
  * Other routes
  */
-$route['default_controller'] = 'forum';
+$route['default_controller'] = 'install';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -25,6 +25,10 @@ I will update this repository frequently.
 2. Go to http://yourwebsite.tld/install
 3. That's it! Just enter what you are asked by the automatic installer.
 
+The installer:
+
+![](https://cloud.githubusercontent.com/assets/5358048/7374056/6858130a-edd0-11e4-9250-0ef62c48f584.png)
+
 ## Server Requirments
 - PHP version 5.4 or newer is recommended.
 - mod_rewrite enabled on your apache server.

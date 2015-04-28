@@ -17,8 +17,6 @@ class Install_model extends CI_Model {
 	public function __construct() {
 		
 		parent::__construct();
-		$this->load->database();
-		$this->load->dbforge();
 		
 	}
 	
@@ -30,6 +28,9 @@ class Install_model extends CI_Model {
 	 * @return  bool
 	 */
 	public function create_database($database_name) {
+		
+		$this->load->database();
+		$this->load->dbforge();
 		
 		if ($this->dbforge->create_database($database_name)) {
 			$find    = "'database' =>";
@@ -51,6 +52,9 @@ class Install_model extends CI_Model {
 	 * @return  bool
 	 */
 	public function create_tables($database_name) {
+		
+		$this->load->database();
+		$this->load->dbforge();
 		
 		// create sessions table
 		$this->db->query('USE ' . $database_name);
@@ -288,6 +292,9 @@ class Install_model extends CI_Model {
 	 */
 	public function edit_database_config_file($find, $replace) {
 		
+		$this->load->database();
+		$this->load->dbforge();
+		
 		$reading = fopen(APPPATH . 'config/database.php', 'r');
 		$writing = fopen(APPPATH . 'config/database.tmp', 'w');
 		
@@ -324,6 +331,9 @@ class Install_model extends CI_Model {
 	 * @return bool
 	 */
 	public function edit_main_config_file($find, $replace) {
+		
+		$this->load->database();
+		$this->load->dbforge();
 		
 		$reading = fopen(APPPATH . 'config/config.php', 'r');
 		$writing = fopen(APPPATH . 'config/config.tmp', 'w');
@@ -362,6 +372,9 @@ class Install_model extends CI_Model {
 	 */
 	public function edit_forum_config_file($find, $replace) {
 		
+		$this->load->database();
+		$this->load->dbforge();
+		
 		$reading = fopen(APPPATH . 'config/forum.php', 'r');
 		$writing = fopen(APPPATH . 'config/forum.tmp', 'w');
 		
@@ -398,6 +411,9 @@ class Install_model extends CI_Model {
 	 * @return bool
 	 */
 	public function edit_routes_config_file($find, $replace) {
+		
+		$this->load->database();
+		$this->load->dbforge();
 		
 		$reading = fopen(APPPATH . 'config/routes.php', 'r');
 		$writing = fopen(APPPATH . 'config/routes.tmp', 'w');
@@ -437,6 +453,9 @@ class Install_model extends CI_Model {
 	 */
 	public function test_database_connexion($hostname, $username, $password) {
 		
+		$this->load->database();
+		$this->load->dbforge();
+		
 		// create connection
 		$conn = new mysqli($hostname, $username, $password);
 		
@@ -455,6 +474,9 @@ class Install_model extends CI_Model {
 	 * @return true ???? MUST FIX
 	 */
 	public function delete_installation_files() {
+		
+		$this->load->database();
+		$this->load->dbforge();
 		
 		$installation_items = array(
 			APPPATH . 'controllers/Install.php',
@@ -478,6 +500,9 @@ class Install_model extends CI_Model {
 	 * @return void
 	 */
 	private function delete_files($target) {
+		
+		$this->load->database();
+		$this->load->dbforge();
 		
 		if (is_dir($target)) {
 			$files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned

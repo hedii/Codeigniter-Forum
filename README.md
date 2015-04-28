@@ -8,6 +8,7 @@ I will update this repository frequently.
 ## Features
 - login, logout, register
 - email verification to confirm a user account
+- a logged in user can update his profile (username, email, new password and profile picture)
 - administration area
 - admin can edit user rights (administrator, moderator, user)
 - forum creation for admin

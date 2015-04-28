@@ -292,9 +292,6 @@ class Install_model extends CI_Model {
 	 */
 	public function edit_database_config_file($find, $replace) {
 		
-		$this->load->database();
-		$this->load->dbforge();
-		
 		$reading = fopen(APPPATH . 'config/database.php', 'r');
 		$writing = fopen(APPPATH . 'config/database.tmp', 'w');
 		
@@ -331,9 +328,6 @@ class Install_model extends CI_Model {
 	 * @return bool
 	 */
 	public function edit_main_config_file($find, $replace) {
-		
-		$this->load->database();
-		$this->load->dbforge();
 		
 		$reading = fopen(APPPATH . 'config/config.php', 'r');
 		$writing = fopen(APPPATH . 'config/config.tmp', 'w');
@@ -372,9 +366,6 @@ class Install_model extends CI_Model {
 	 */
 	public function edit_forum_config_file($find, $replace) {
 		
-		$this->load->database();
-		$this->load->dbforge();
-		
 		$reading = fopen(APPPATH . 'config/forum.php', 'r');
 		$writing = fopen(APPPATH . 'config/forum.tmp', 'w');
 		
@@ -411,9 +402,6 @@ class Install_model extends CI_Model {
 	 * @return bool
 	 */
 	public function edit_routes_config_file($find, $replace) {
-		
-		$this->load->database();
-		$this->load->dbforge();
 		
 		$reading = fopen(APPPATH . 'config/routes.php', 'r');
 		$writing = fopen(APPPATH . 'config/routes.tmp', 'w');
@@ -475,9 +463,6 @@ class Install_model extends CI_Model {
 	 */
 	public function delete_installation_files() {
 		
-		$this->load->database();
-		$this->load->dbforge();
-		
 		$installation_items = array(
 			APPPATH . 'controllers/Install.php',
 			APPPATH . 'views/install',
@@ -500,9 +485,6 @@ class Install_model extends CI_Model {
 	 * @return void
 	 */
 	private function delete_files($target) {
-		
-		$this->load->database();
-		$this->load->dbforge();
 		
 		if (is_dir($target)) {
 			$files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned

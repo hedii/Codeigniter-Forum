@@ -1,7 +1,7 @@
 # Codeigniter-Forum
 A complete forum application with automatic installer based on Codeigniter 3.x
 
-DON'T USE IT AS IT IS IN A PRODUCTION SERVER, THIS FORUM APP IS STILL IN DEVELOPMENT.
+DON'T USE IT AS IS IN A PRODUCTION SERVER, THIS FORUM APP IS STILL IN DEVELOPMENT.
 
 I will update this repository frequently.
 
@@ -22,8 +22,9 @@ I will update this repository frequently.
 
 ## Installation
 1. Clone this repository on your server
-2. Go to http://yourwebsite.tld/install
-3. That's it! Just enter what you are asked by the automatic installer.
+2. Apache user must have read/write access to files to permit automatic installation
+3. Go to http://yourwebsite.tld/install
+4. That's it! Just enter what you are asked by the automatic installer
 
 The installer:
 

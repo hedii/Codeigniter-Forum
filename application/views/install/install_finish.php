@@ -14,12 +14,12 @@
 				<h1>Finish the installation</h1>
 			</div>
 			<p>Forum settings are ok!</p>
-			<p>The installation process is finished.<br>For security reasons, all files related to this installer will be deleted after you click the "Finish the installation" button.</p>
+			<p>The installation process will finish.</p>
+			<p>For security reasons, all files related to this installer will be deleted after you click the "Finish the installation" button.</p>
 			<p>You the will be redirected to the home page of your forum.</p>
-			<p>To login as admin:</p>
-			<pre>username: admin<br>password: admin<br><strong>(!!!don't forget to change these identifiers after you're logged in!!!)</strong></pre>
-			<p><strong>Have fun with Codeigniter Forums :)</strong></p>
-			<br>
+			<p>Login as admin (with the admin account your created just before) once the installation is finished, and create your first forum.</p>
+			<p><strong>Have fun with Codeigniter Forum :)</strong></p>
+			<hr>
 			
 			<a class="btn btn-primary" href="<?= base_url('install/delete_files') ?>">Finish the installation</a>
 		</div>

@@ -266,18 +266,7 @@ class Install_model extends CI_Model {
 			return false;
 		}
 		
-		// create admin user
-		$this->db->query('USE ' . $database_name);
-		$password_hash = password_hash('admin', PASSWORD_BCRYPT);
-		$sql = "
-			INSERT INTO users (username, password, email, is_confirmed, is_admin)
-			VALUES ('admin', '$password_hash', 'you@example.com', '1', '1');
-		";
-		if(!$this->db->query($sql)) {
-			return false;
-		}
-		
-		// if everything run ok, return true
+		// if everything is ok, return true
 		return true;
 
 	}

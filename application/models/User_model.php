@@ -49,6 +49,30 @@ class User_model extends CI_Model {
 	}
 	
 	/**
+	 * create_admin_user function.
+	 * 
+	 * @access public
+	 * @param string $username
+	 * @param string $email
+	 * @param string $password
+	 * @return bool
+	 */
+	public function create_admin_user($username, $email, $password) {
+		
+		$data = array(
+			'username'     => $username,
+			'email'        => $email,
+			'password'     => $this->hash_password($password),
+			'created_at'   => date('Y-m-j H:i:s'),
+			'is_admin'     => '1',
+			'is_confirmed' => '1',
+		);
+		
+		return $this->db->insert('users', $data);
+		
+	}
+	
+	/**
 	 * resolve_user_login function.
 	 * 
 	 * @access public

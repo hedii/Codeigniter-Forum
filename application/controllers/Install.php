@@ -232,8 +232,13 @@ class Install extends CI_Controller {
 		
 		// form validation
 		$this->form_validation->set_rules('install_base_url', 'Base url', 'trim|required|max_length[255]');
-		$this->form_validation->set_rules('install_site_title', 'Forum title', 'trim|required|max_length[255]');
-		$this->form_validation->set_rules('install_site_slogan', 'Forum slogan', 'trim|max_length[255]');
+		$this->form_validation->set_rules('install_site_title', 'Forum Title', 'trim|required|max_length[255]');
+		$this->form_validation->set_rules('install_site_slogan', 'Forum Slogan', 'trim|max_length[255]');
+		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|alpha_numeric|min_length[4]|max_length[20]');
+		$this->form_validation->set_rules('admin_email', 'Email', 'trim|required|valid_email');
+		$this->form_validation->set_rules('admin_password', 'Password', 'trim|required|min_length[6]');
+		$this->form_validation->set_rules('admin_password_confirm', 'Password Confirmation', 'trim|required|min_length[6]|matches[admin_password]');
+
 		
 		if ($this->form_validation->run() === false) {
 		
@@ -244,9 +249,53 @@ class Install extends CI_Controller {
 		
 		} else {
 			
+			// load the user model
+			$this->load->model('user_model');
+			
+			// setup variables from the form inputs
 			$base_url    = $this->input->post('install_base_url');
 			$site_title  = addslashes($this->input->post('install_site_title'));
 			$site_slogan = null !== $this->input->post('install_site_slogan') ? addslashes($this->input->post('install_site_slogan')) : '';
+			$username = $this->input->post('admin_username');
+			$email    = $this->input->post('admin_email');
+			$password = $this->input->post('admin_password');
+			
+			// create the admin user
+			if ($this->user_model->create_admin_user($username, $email, $password) !== true) {
+				
+				$data->error = 'There was a problem trying to create the admin user. Please try again...';
+				$this->load->view('header', $data);
+				$this->load->view('install/install_site_settings', $data);
+				$this->load->view('footer', $data);
+				return;
+				
+			}
+			
+			// change session driver to session stored in database
+			$find    = '$config[\'sess_driver\'] =';
+			$replace = '$config[\'sess_driver\'] = \'' . 'database' . '\';' . "\n";
+			if ($this->install_model->edit_main_config_file($find, $replace) !== true) {
+				
+				$data->error = 'The session driver on your main config file cannot be updated...';
+				$this->load->view('header', $data);
+				$this->load->view('install/install_site_settings', $data);
+				$this->load->view('footer', $data);
+				return;
+				
+			}
+			
+			// change session path to session stored in database
+			$find    = '$config[\'sess_save_path\'] =';
+			$replace = '$config[\'sess_save_path\'] = \'' . 'ci_sessions' . '\';' . "\n";
+			if ($this->install_model->edit_main_config_file($find, $replace) !== true) {
+				
+				$data->error = 'The session path on your main config file cannot be updated...';
+				$this->load->view('header', $data);
+				$this->load->view('install/install_site_settings', $data);
+				$this->load->view('footer', $data);
+				return;
+				
+			}
 			
 			// replace base url in the config.php config file
 			$find    = '$config[\'base_url\'] =';

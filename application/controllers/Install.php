@@ -271,6 +271,19 @@ class Install extends CI_Controller {
 				
 			}
 			
+			// set the site email address
+			$find    = '$config[\'site_email\'] =';
+			$replace = '$config[\'site_email\'] = \'' . $email . '\';' . "\n";
+			if ($this->install_model->edit_forum_config_file($find, $replace) !== true) {
+				
+				$data->error = 'The Forum email address on your forum config file cannot be updated...';
+				$this->load->view('header', $data);
+				$this->load->view('install/install_site_settings', $data);
+				$this->load->view('footer', $data);
+				return;
+				
+			}
+			
 			// change session driver to session stored in database
 			$find    = '$config[\'sess_driver\'] =';
 			$replace = '$config[\'sess_driver\'] = \'' . 'database' . '\';' . "\n";

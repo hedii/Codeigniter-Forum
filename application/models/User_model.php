@@ -356,6 +356,9 @@ class User_model extends CI_Model {
 		$this->load->library('email');
 		$this->load->helper('url');
 		
+		// get the site email address
+		$email_address = $this->config->item('site_email');
+		
 		// initialize the email configuration
 		$this->email->initialize(array(
 			'mailtype' => 'html',
@@ -369,7 +372,7 @@ class User_model extends CI_Model {
 		$hash = sha1($email . $registration_date);
 		
 		// prepare the email
-		$this->email->from('contact@youtube-mp4.fr', 'contact@youtube-mp4.fr'); // only for tests
+		$this->email->from($email_address, $email_address);
 		$this->email->to($email);
 		$this->email->subject('Please confirm your email to validate your new user account.');
 		$message  = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
